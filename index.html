@@ -1,72 +1,36 @@
----
-layout: page
-title: My website
-subtitle: This is where I will tell my friends way too much about me
-use-site-title: true
----
 
-<div class="posts-list">
-  {% for post in paginator.posts %}
-  <article class="post-preview">
-    <a href="{{ post.url | relative_url }}">
-	  <h2 class="post-title">{{ post.title }}</h2>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR CODE SCAN</title>
+  <style>
+    video{width:100%!important;height:auto!important}#reload{margin-top:5px;margin-bottom:10px;padding:5px;background-color:#0336FF;color:#f3f4f5;border-radius:3px;width:150px;cursor:pointer}a{text-decoration:none;color:#0336FF}.progress{padding:10px;margin-top:5px}#camera{position:relative;width:auto;height:100%}#camera:after,#camera:before,#camera>:first-child:after,#camera>:first-child:before{position:absolute;width:80px;height:80px;border-color:red;border-style:solid;content:' '}#camera:before{top:0;left:0;border-width:5px 0 0 5px}#camera:after{top:0;right:0;border-width:5px 5px 0 0}#camera>:first-child:before{bottom:0;right:0;border-width:0 5px 5px 0}#camera>:first-child:after{bottom:0;left:0;border-width:0 0 5px 5px}#camera-inside{padding:10px;margin-bottom:-5px}#hasil{font-size:20px;font-weight:600px;background-color:#76ff03;color:#202020}
 
-	  {% if post.subtitle %}
-	  <h3 class="post-subtitle">
-	    {{ post.subtitle }}
-	  </h3>
-	  {% endif %}
-    </a>
-
-    <p class="post-meta">
-      Posted on {{ post.date | date: site.date_format }}
-    </p>
-
-    <div class="post-entry-container">
-      {% if post.image %}
-      <div class="post-image">
-        <a href="{{ post.url | relative_url }}">
-          <img src="{{ post.image | relative_url }}">
-        </a>
-      </div>
-      {% endif %}
-      <div class="post-entry">
-        {{ post.excerpt | strip_html | xml_escape | truncatewords: site.excerpt_length }}
-        {% assign excerpt_word_count = post.excerpt | number_of_words %}
-        {% if post.content != post.excerpt or excerpt_word_count > site.excerpt_length %}
-          <a href="{{ post.url | relative_url }}" class="post-read-more">[Read&nbsp;More]</a>
-        {% endif %}
+  </style>
+<script type="text/javascript" src="llqrcode.js"></script>
+<script type="text/javascript" src="webqr.js"></script>
+</head>
+<body>
+  <center>
+    <div id="main">
+      <div id="mainbody">
+        <div class="progress">
+          QR Login <span id="nama_hotspot"></span>
+          <div id="hasil"></div>
+        </div>
+        <div id="camera">
+            <div id="camera-inside"></div>
+        </div>
       </div>
     </div>
-
-    {% if post.tags.size > 0 %}
-    <div class="blog-tags">
-      Tags:
-      {% if site.link-tags %}
-      {% for tag in post.tags %}
-      <a href="{{ '/tags' | relative_url }}#{{- tag -}}">{{- tag -}}</a>
-      {% endfor %}
-      {% else %}
-        {{ post.tags | join: ", " }}
-      {% endif %}
-    </div>
-    {% endif %}
-
-   </article>
-  {% endfor %}
-</div>
-
-{% if paginator.total_pages > 1 %}
-<ul class="pager main-pager">
-  {% if paginator.previous_page %}
-  <li class="previous">
-    <a href="{{ paginator.previous_page_path | relative_url }}">&larr; Newer Posts</a>
-  </li>
-  {% endif %}
-  {% if paginator.next_page %}
-  <li class="next">
-    <a href="{{ paginator.next_page_path | relative_url }}">Older Posts &rarr;</a>
-  </li>
-  {% endif %}
-</ul>
-{% endif %}
+    <br>
+    <div id="reload" onclick="location.reload();">Refresh Camera</div>
+    <p><small>arahkan ke voucher yang ada QR Code</small></p>
+    <br>
+  </center>
+<canvas style="display:none;" id="qr-canvas" width="800" height="600"></canvas>
+<script type="text/javascript">load();</script>
+</body>
+</html>
